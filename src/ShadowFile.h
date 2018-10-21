@@ -2,12 +2,13 @@
 
 #include <string>
 #include <vector>
+#include "ShadowRow.h"
 
 class ShadowFile
 {
 public:
-    ShadowFile(const std::string& file);
+    explicit ShadowFile(const std::string& file);
 
 private:
-    std::vector<>
-}
+    std::vector<ShadowRow> m_rows;
+};

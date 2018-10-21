@@ -8,13 +8,13 @@ enum class eHashType
     blowfish_y, // $2y$ is Blowfish
     sha256, // $5$ is SHA-256
     sha512, // $6$ is SHA-512
-}
+};
 
 struct ShadowPassword
 {
     eHashType type;
     std::string hash;
-}
+};
 
 class ShadowRow
 {
@@ -22,6 +22,6 @@ public:
     explicit ShadowRow(const std::string& row);
 
 private:
-    stds::string m_username;
+    std::string m_username;
     ShadowPassword m_password;
-}
+};
