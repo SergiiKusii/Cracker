@@ -2,5 +2,5 @@
 
 ShadowFile::ShadowFile(const std::string& file)
 {
-
+    
 }

@@ -5,6 +5,7 @@
 
 enum class LogType
 {
+    none,
     info,
     error
 };
@@ -20,7 +21,7 @@ public:
     void Log(const LogType type, const std::string& msg);
 
 private:
-    std::unique_ptr<Logger> m_instance;
+    static std::unique_ptr<Logger> m_instance;
     
     Logger() = default;
 };
