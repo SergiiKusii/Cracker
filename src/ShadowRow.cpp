@@ -9,7 +9,7 @@ namespace Constants
 {
     static const char fieldSeparator = ':';
     static const char passwordSeparator = '$';
-    static const int paswordFieldMinSize = 2;
+    static const int paswordFieldMinSize = 1 + 2;
     static const std::set<std::string> lockedPasswords = {"*", "!", "!!"};  
     static const std::map<std::string, HashType> hashTypeMap = {
         {"1", HashType::md5},
@@ -18,7 +18,7 @@ namespace Constants
         {"5", HashType::sha256},
         {"6", HashType::sha512},
     };
-} // name
+}
 
 
 namespace FieldIdx
@@ -45,7 +45,7 @@ static std::vector<std::string> split(const std::string& s, char delimiter)
 
 static HashType GetHashType(const std::string& str)
 {
-#ifdef _DEBUG_MODE
+#ifdef _TRACE_MODE
     std::cout << "GetHashType(" << str << ")" << std::endl;
 #endif 
     auto it = Constants::hashTypeMap.find(str);
@@ -59,7 +59,7 @@ static HashType GetHashType(const std::string& str)
 
 ShadowRow::ShadowRow(const std::string& row)
 {
-#ifdef _DEBUG_MODE
+#ifdef _TRACE_MODE
     std::cout << "ShadowRow(" << row << ")" << std::endl;
 #endif
     auto fields = split(row, Constants::fieldSeparator);
@@ -74,10 +74,9 @@ ShadowRow::ShadowRow(const std::string& row)
 
 void ShadowRow::SetPassword(const std::string& str)
 {
-#ifdef _DEBUG_MODE
+#ifdef _TRACE_MODE
     std::cout << "SetPassword(" << str << ")" << std::endl;
 #endif    
-    auto it = Constants::lockedPasswords.find(str);
     if (Constants::lockedPasswords.find(str) != Constants::lockedPasswords.end())
     {
         m_isLocked = true;
@@ -89,7 +88,7 @@ void ShadowRow::SetPassword(const std::string& str)
     {
         throw std::runtime_error("Cannot parse password " + str);
     }
-    auto idx = 0;
+    size_t idx = 1; // first index empty string
     auto hashTypeStr = fields[idx++];
     m_password.type = GetHashType(hashTypeStr);
     if (m_password.type == HashType::none)

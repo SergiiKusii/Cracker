@@ -1,11 +1,11 @@
 #include "ShadowFile.h"
-#include <fstream>
 #include "stdafx.h"
-
+#include "Logger.h"
+#include <fstream>
 
 ShadowFile::ShadowFile(const std::string& file)
 {
-#ifdef _DEBUG_MODE
+#ifdef _TRACE_MODE
     std::cout << "ShadowFile(" << file << ")" << std::endl;
 #endif
     std::string line;
@@ -17,7 +17,14 @@ ShadowFile::ShadowFile(const std::string& file)
     
     while (std::getline (filestream,line))
     {
-        m_rows.emplace_back(line);
+        try
+        {
+            m_rows.emplace_back(line);
+        }
+        catch (const std::exception& ex)
+        {
+            Logger::Get()->Error(ex.what());
+        }
     }
     
     filestream.close();
