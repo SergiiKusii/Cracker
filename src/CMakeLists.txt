@@ -16,9 +16,9 @@ set (CMAKE_BUILD_TYPE Debug)
 
 set (ERR_NO_UNIX "Cannot build on non Unix systems")
 
-# if ( WITH_DEBUG_MODE )
-#      ADD_DEFINITIONS( -DMY_DEBUG_MODE=1)
-# endif()
+if ( WITH_DEBUG_MODE )
+     ADD_DEFINITIONS( -D_DEBUG_MODE=1)
+endif()
 
 if ( CMAKE_COMPILER_IS_GNUCXX )
     # set(MY_CXX_FLAGS  "-Wall -std=c++0x -fmessage-length=0 -v -L/usr/local/lib -L/usr/lib")

@@ -1,8 +1,13 @@
 #include "ShadowFile.h"
 #include <fstream>
+#include "stdafx.h"
+
 
 ShadowFile::ShadowFile(const std::string& file)
 {
+#ifdef _DEBUG_MODE
+    std::cout << "ShadowFile(" << file << ")" << std::endl;
+#endif
     std::string line;
     std::ifstream filestream(file);
     if (!filestream.is_open())

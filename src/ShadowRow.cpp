@@ -1,7 +1,7 @@
 #include "ShadowRow.h"
+#include "stdafx.h"
 #include <vector>
 #include <sstream>
-#include <exception>
 #include <set>
 #include <map>
  
@@ -45,6 +45,9 @@ static std::vector<std::string> split(const std::string& s, char delimiter)
 
 static HashType GetHashType(const std::string& str)
 {
+#ifdef _DEBUG_MODE
+    std::cout << "GetHashType(" << str << ")" << std::endl;
+#endif 
     auto it = Constants::hashTypeMap.find(str);
     if (it != Constants::hashTypeMap.end())
     {
@@ -56,6 +59,9 @@ static HashType GetHashType(const std::string& str)
 
 ShadowRow::ShadowRow(const std::string& row)
 {
+#ifdef _DEBUG_MODE
+    std::cout << "ShadowRow(" << row << ")" << std::endl;
+#endif
     auto fields = split(row, Constants::fieldSeparator);
     if (fields.size() < FieldIdx::max)
     {
@@ -68,6 +74,9 @@ ShadowRow::ShadowRow(const std::string& row)
 
 void ShadowRow::SetPassword(const std::string& str)
 {
+#ifdef _DEBUG_MODE
+    std::cout << "SetPassword(" << str << ")" << std::endl;
+#endif    
     auto it = Constants::lockedPasswords.find(str);
     if (Constants::lockedPasswords.find(str) != Constants::lockedPasswords.end())
     {
