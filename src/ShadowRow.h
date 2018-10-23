@@ -1,8 +1,9 @@
 #pragma ones
 #include <string>
 
-enum class eHashType
+enum class HashType
 {
+    none,
     md5, // $1$ is MD5
     blowfish_a, // $2a$ is Blowfish
     blowfish_y, // $2y$ is Blowfish
@@ -12,7 +13,8 @@ enum class eHashType
 
 struct ShadowPassword
 {
-    eHashType type;
+    HashType type;
+    std::string salt;
     std::string hash;
 };
 
@@ -22,6 +24,10 @@ public:
     explicit ShadowRow(const std::string& row);
 
 private:
-    std::string m_username;
+    void SetPassword(const std::string& str);
+
+private:
+    std::string m_userName;
     ShadowPassword m_password;
+    bool m_isLocked = false;
 };
