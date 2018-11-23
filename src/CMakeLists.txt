@@ -5,7 +5,8 @@ set(CMAKE_CXX_STANDARD 14)
 OPTION(WITH_DEBUG_MODE "Build with debug mode" ON)
 
 set (PROJECT Cracker)
-# project(Cracker)
+project(${PROJECT})
+
 set ("${PROJECT}_BINARY_DIR"  bin)
 set ("${PROJECT}_SOURCE_DIR" src)
 set (CMAKE_INCLUDE_PATH ${${PROJECT}_SOURCE_DIR})
