@@ -1,6 +1,8 @@
 #include "stdafx.h"
 #include "Logger.h"
 #include "ShadowFile.h"
+#include "GetspnamWraper.h"
+#include "Cryper.h"
 
 namespace Constants
 {
@@ -26,7 +28,10 @@ int main(int argc, char *argv[])
     
     try
     {
-        ShadowFile shadowFile(argv[1]);
+        //ShadowFile shadowFile(argv[1]);
+        //GetspnamWraper getspnamWraper(argv[1]);
+        Cryper cryper(HashType::sha512);
+        cryper.Encrypt("123456");
     }
     catch (const std::exception& ex)
     {

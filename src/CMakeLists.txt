@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 2.8)
 
-set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD 14)
 
 OPTION(WITH_DEBUG_MODE "Build with debug mode" ON)
 
@@ -50,13 +50,19 @@ set (PRIVATE_CLASSES
     ShadowFile
     ShadowRow
     Logger
+    GetspnamWraper
+    Cryper
     )
 
-SET (HEADERS_ONLY)
+SET (HEADERS_ONLY
+    Common
+)
 
 set (PUBLIC_CLASSES)
 
-set (ADDITIONAL_LIBRARIES)
+set (ADDITIONAL_LIBRARIES
+    cryptopp-static
+)
 
 set (PUBLIC_HEADERS)
 set (SOURCES)
@@ -66,9 +72,9 @@ foreach (class ${PRIVATE_CLASSES})
     LIST (APPEND HEADERS ${class}.h)
 endforeach ()
 
-# foreach (class ${HEADERS_ONLY})
-#     LIST (APPEND HEADERS ${class}.h)
-# endforeach ()
+foreach (class ${HEADERS_ONLY})
+    LIST (APPEND HEADERS ${class}.h)
+endforeach ()
     
 # foreach (class ${PUBLIC_CLASSES})
 #     LIST (APPEND SOURCES ${class}.cpp)
@@ -77,6 +83,11 @@ endforeach ()
 # endforeach ()
 
 add_executable (${PROJECT} ${MAIN_SOURCES} ${SOURCES})
+
+set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake")
+find_package(CryptoPP REQUIRED)
+target_link_libraries(${PROJECT} cryptopp)
+
 
 # target_link_libraries (${PROJECT} ${ADDITIONAL_LIBRARIES})
 
