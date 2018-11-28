@@ -1,8 +1,10 @@
 #include "stdafx.h"
-#include "Logger.h"
 #include "ShadowFile.h"
 #include "GetspnamWraper.h"
 #include "Cryper.h"
+#include <plog/Log.h>
+#include <plog/Appenders/ColorConsoleAppender.h>
+#include <plog/Formatters/MessageOnlyFormatter.h>
 
 namespace Constants
 {
@@ -11,9 +13,11 @@ namespace Constants
 
 void PrintHelp()
 {
-    auto& log =  *Logger::Get();
-    log.Log(LogType::none, "Cracker - application for crack linux passwords.\nCopyright Sergii Kusii 2018.");
-    log.Log(LogType::none, "Cracker usage:\nCracker [path to shadow file]");
+    static plog::ColorConsoleAppender<plog::MessageOnlyFormatter> consoleAppender;
+    plog::init(plog::info, &consoleAppender);
+
+    LOGI << "Cracker - application for crack linux passwords.\nCopyright Sergii Kusii 2018.";
+    LOGI << "Cracker usage:\nCracker <path to shadow file> [user name]";
 }
 
 int main(int argc, char *argv[])
@@ -24,7 +28,10 @@ int main(int argc, char *argv[])
         return 0;
     }
 
-    Logger::Get()->Info("Start Cracker!");
+    static plog::ColorConsoleAppender<plog::TxtFormatter> consoleAppender;
+    plog::init(plog::info, &consoleAppender);
+
+    LOGI << "Start Cracker!";
     
     try
     {
@@ -35,11 +42,11 @@ int main(int argc, char *argv[])
     }
     catch (const std::exception& ex)
     {
-        Logger::Get()->Error(ex.what());
+        LOGE << ex.what();
         return -1;
     }
     
-    Logger::Get()->Info("End Cracker!");
+    LOGI << "End Cracker!";
 
     return 0;
 }

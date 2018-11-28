@@ -7,11 +7,12 @@ OPTION(WITH_DEBUG_MODE "Build with debug mode" ON)
 set (PROJECT Cracker)
 project(${PROJECT})
 
-set ("${PROJECT}_BINARY_DIR"  bin)
-set ("${PROJECT}_SOURCE_DIR" src)
-set (CMAKE_INCLUDE_PATH ${${PROJECT}_SOURCE_DIR})
+set(ROOT_DIR "${CMAKE_SOURCE_DIR}/..")
+set (BINARY_DIR  ${ROOT_DIR}/bin)
+set (SOURCE_DIR ${ROOT_DIR}/src)
+set (CMAKE_INCLUDE_PATH ${SOURCE_DIR})
 # set (CMAKE_LIBRARY_PATH ${${PROJECT}_LIB_DIR})
-set (EXECUTABLE_OUTPUT_PATH ${${PROJECT}_BINARY_DIR})
+set (EXECUTABLE_OUTPUT_PATH ${BINARY_DIR})
 set (CMAKE_VERBOSE_MAKEFILE ON)
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake")
 
@@ -41,7 +42,6 @@ set (MAIN_SOURCES
 set (PRIVATE_CLASSES
     ShadowFile
     ShadowRow
-    Logger
     GetspnamWraper
     Cryper
     )

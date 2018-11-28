@@ -1,5 +1,5 @@
 #include "Cryper.h"
-#include "Logger.h"
+#include <plog/Log.h>
 
 #include <crypto++/sha.h>
 #include <crypto++/config.h>
@@ -13,7 +13,7 @@ Cryper::Cryper(const HashType& type)
 
 void Cryper::Encrypt(const std::string& plain)
 {
-    Logger::Get()->Info("start encrypt plain=" + plain);
+    LOGI << "start encrypt plain=" + plain;
     byte digest[CryptoPP::SHA512::DIGESTSIZE];
 
     CryptoPP::SHA512().CalculateDigest(digest, (const byte *)plain.data(), plain.size());
@@ -25,5 +25,5 @@ void Cryper::Encrypt(const std::string& plain)
     encoder.Put( digest, sizeof(digest) );
     encoder.MessageEnd();
 
-    Logger::Get()->Info("end encrypt hex digest=" + output);
+    LOGI <<  "end encrypt hex digest=" + output;
 }
