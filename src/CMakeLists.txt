@@ -13,12 +13,13 @@ set (CMAKE_INCLUDE_PATH ${${PROJECT}_SOURCE_DIR})
 # set (CMAKE_LIBRARY_PATH ${${PROJECT}_LIB_DIR})
 set (EXECUTABLE_OUTPUT_PATH ${${PROJECT}_BINARY_DIR})
 set (CMAKE_VERBOSE_MAKEFILE ON)
-set (CMAKE_BUILD_TYPE Debug)
+set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake")
 
 set (ERR_NO_UNIX "Cannot build on non Unix systems")
 
 if ( WITH_DEBUG_MODE )
      ADD_DEFINITIONS( -D_DEBUG_MODE=1)
+     set (CMAKE_BUILD_TYPE Debug)
 endif()
 
 if ( CMAKE_COMPILER_IS_GNUCXX )
@@ -31,17 +32,7 @@ else ()
     message (FATAL_ERROR ${ERR_NO_UNIX})
 endif ()
 
-set ("${PROJECT}_VERSION_MAJ" 0)
-set ("${PROJECT}_VERSION_MIN" 1)
-set ("${PROJECT}_VERSION_A" 1)
-set ("${PROJECT}_VERSION_B" 1)
-set ("${PROJECT}_VERSION" ${${PROJECT}_VERSION_MAJ}0${${PROJECT}_VERSION_MIN}0${${PROJECT}_VERSION_A}0${${PROJECT}_VERSION_B})
-
-message(STATUS ${${PROJECT}_VERSION})
-
-set (TARGETS "")
-
-set (HEADERS "")
+include(cmake/version.cmake)
 
 set (MAIN_SOURCES
     Cracker.cpp
@@ -55,55 +46,14 @@ set (PRIVATE_CLASSES
     Cryper
     )
 
-SET (HEADERS_ONLY
-    Common
-)
-
-set (PUBLIC_CLASSES)
-
-set (ADDITIONAL_LIBRARIES
-    cryptopp-static
-)
-
-set (PUBLIC_HEADERS)
 set (SOURCES)
 
 foreach (class ${PRIVATE_CLASSES})
     LIST (APPEND SOURCES ${class}.cpp)
-    LIST (APPEND HEADERS ${class}.h)
 endforeach ()
-
-foreach (class ${HEADERS_ONLY})
-    LIST (APPEND HEADERS ${class}.h)
-endforeach ()
-    
-# foreach (class ${PUBLIC_CLASSES})
-#     LIST (APPEND SOURCES ${class}.cpp)
-#     LIST (APPEND HEADERS ../include/${PROJECT}/${class}.hpp)
-#     LIST (APPEND PUBLIC_HEADERS ../include/${PROJECT}/${class}.hpp)
-# endforeach ()
 
 add_executable (${PROJECT} ${MAIN_SOURCES} ${SOURCES})
 
-set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake")
-find_package(CryptoPP REQUIRED)
-target_link_libraries(${PROJECT} cryptopp)
-
-
-# target_link_libraries (${PROJECT} ${ADDITIONAL_LIBRARIES})
+include(cmake/third_party.cmake)
 
 set_target_properties(${PROJECT} PROPERTIES VERSION "${${PROJECT}_VERSION}" SOVERSION "0")
-
-# INSTALL (
-#     TARGETS
-#     ${PROJECT}
-#     DESTINATION
-#     lib${LIB_SUFFIX}
-# )
-
-# INSTALL (
-#     FILES
-#     ${PUBLIC_HEADERS}
-#     DESTINATION
-#     include/${PROJECT}
-# )
