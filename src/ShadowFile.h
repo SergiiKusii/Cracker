@@ -2,13 +2,19 @@
 
 #include <string>
 #include <vector>
-#include "ShadowRow.h"
+#include <set>
+
+#include "Common.h"
+
+using Users = std::set<std::string>;
 
 class ShadowFile
 {
 public:
     explicit ShadowFile(const std::string& file);
+    PasswordHashInfo GetPasswordHashInfo(const std::string& userName);
+    Users GetUsers();
 
 private:
-    std::vector<ShadowRow> m_rows;
+    std::string m_fileName;
 };

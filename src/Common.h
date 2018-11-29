@@ -9,3 +9,11 @@ enum class HashType
     sha256, // $5$ is SHA-256
     sha512, // $6$ is SHA-512
 };
+
+struct PasswordHashInfo
+{
+    HashType type;
+    std::string salt;
+    std::string hash;
+    bool isLocked;
+};

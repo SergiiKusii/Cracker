@@ -1,10 +1,12 @@
-#include "ShadowRow.h"
-#include "stdafx.h"
 #include <vector>
 #include <sstream>
 #include <set>
 #include <map>
- 
+#include <shadow.h>
+#include <paths.h>
+
+#include "ShadowRow.h"
+
 namespace Constants
 {
     static const char fieldSeparator = ':';
@@ -17,17 +19,6 @@ namespace Constants
         {"2y", HashType::blowfish_y},
         {"5", HashType::sha256},
         {"6", HashType::sha512},
-    };
-}
-
-
-namespace FieldIdx
-{
-    enum eFieldIdx
-    {
-        userName = 0,
-        password,
-        max
     };
 }
 
@@ -57,29 +48,16 @@ static HashType GetHashType(const std::string& str)
     return HashType::none;
 }
 
-ShadowRow::ShadowRow(const std::string& row)
+ShadowRow::ShadowRow(struct spwd* pspwd)
 {
-#ifdef _TRACE_MODE
-    std::cout << "ShadowRow(" << row << ")" << std::endl;
-#endif
-    auto fields = split(row, Constants::fieldSeparator);
-    if (fields.size() < FieldIdx::max)
-    {
-        throw std::runtime_error("Cannot parse row " + row);
-    }
-
-    m_userName = fields[FieldIdx::userName];
-    SetPassword(fields[FieldIdx::password]);
+    SetPassword(pspwd->sp_pwdp);
 }
 
 void ShadowRow::SetPassword(const std::string& str)
 {
-#ifdef _TRACE_MODE
-    std::cout << "SetPassword(" << str << ")" << std::endl;
-#endif    
     if (Constants::lockedPasswords.find(str) != Constants::lockedPasswords.end())
     {
-        m_isLocked = true;
+        m_password.isLocked = true;
         return;
     }
 
@@ -102,4 +80,9 @@ void ShadowRow::SetPassword(const std::string& str)
     }
 
     m_password.hash = fields[idx++];
+}
+
+PasswordHashInfo ShadowRow::GetPasswordHashInfo()
+{
+    return m_password;
 }

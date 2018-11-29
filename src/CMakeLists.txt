@@ -42,7 +42,6 @@ set (MAIN_SOURCES
 set (PRIVATE_CLASSES
     ShadowFile
     ShadowRow
-    GetspnamWraper
     Cryper
     )
 
