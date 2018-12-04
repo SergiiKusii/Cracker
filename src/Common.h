@@ -12,8 +12,8 @@ enum class HashType
 
 struct PasswordHashInfo
 {
-    HashType type;
+    HashType type = HashType::none;
     std::string salt;
     std::string hash;
-    bool isLocked;
+    bool isLocked = false;
 };

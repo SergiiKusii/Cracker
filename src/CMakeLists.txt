@@ -36,12 +36,13 @@ endif ()
 include(cmake/version.cmake)
 
 set (MAIN_SOURCES
-    Cracker.cpp
+    main.cpp
     )
 
 set (PRIVATE_CLASSES
     ShadowFile
     ShadowRow
+    Cracker
     Cryper
     )
 
