@@ -79,9 +79,13 @@ int main(int argc, char *argv[])
     }
 
     static plog::ColorConsoleAppender<plog::TxtFormatter> consoleAppender;
+    #ifdef _DEBUG_MODE
+    plog::init(plog::debug, &consoleAppender);
+    #else
     plog::init(plog::info, &consoleAppender);
+    #endif
 
-    LOGI << "Start Cracker";
+    LOGD << "Start Cracker";
     
     try
     {
@@ -98,7 +102,7 @@ int main(int argc, char *argv[])
         }
 
         auto hashInfo = shadowFile.GetPasswordHashInfo(cfg.userName);
-        LOGI << "User: " << cfg.userName << ", hash: " << hashInfo.hash;
+        LOGD << "User: " << cfg.userName << ", hash: " << hashInfo.hash;
 
         Cracker cracker;
         auto password = cracker.Crack(hashInfo);
@@ -111,7 +115,7 @@ int main(int argc, char *argv[])
         return -1;
     }
     
-    LOGI << "End Cracker";
+    LOGD << "End Cracker";
 
     return 0;
 }
