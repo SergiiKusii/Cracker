@@ -10,7 +10,8 @@
             "command": "cmake",
             "args": [
                 "${workspaceRoot}/src"
-            ]
+            ],
+            "problemMatcher": []
         },
         {
             "label": "build",
