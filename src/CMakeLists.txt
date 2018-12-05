@@ -44,6 +44,8 @@ set (PRIVATE_CLASSES
     ShadowRow
     Cracker
     ConsoleRender
+    UnhesherBase
+    UnhesherNative
     Cryper
     )
 
