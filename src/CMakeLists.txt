@@ -43,6 +43,7 @@ set (PRIVATE_CLASSES
     ShadowFile
     ShadowRow
     Cracker
+    ConsoleRender
     Cryper
     )
 

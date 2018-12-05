@@ -1,10 +1,17 @@
+#pragma once
+
 #include <string>
 
 #include "Common.h"
+#include "IRender.h"
 
 class Cracker
 {
 public:
-   std::string Crack(const PasswordHashInfo& passwordHashInfo);
+    Cracker (IRenderGuard&& render);
 
+    std::string Crack(const PasswordHashInfo& passwordHashInfo);
+
+private:
+    IRenderGuard m_render;
 };

@@ -7,6 +7,7 @@
 
 #include "ShadowFile.h"
 #include "Cracker.h"
+#include "ConsoleRender.h"
 
 namespace Constants
 {
@@ -104,7 +105,8 @@ int main(int argc, char *argv[])
         auto hashInfo = shadowFile.GetPasswordHashInfo(cfg.userName);
         LOGD << "User: " << cfg.userName << ", hash: " << hashInfo.hash;
 
-        Cracker cracker;
+
+        Cracker cracker(std::make_unique<ConsoleRender>());
         auto password = cracker.Crack(hashInfo);
 
         PrintResult(password);

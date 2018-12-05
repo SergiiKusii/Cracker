@@ -2,6 +2,11 @@
 
 #include "Cracker.h"
 
+Cracker::Cracker (IRenderGuard&& render)
+    : m_render(std::move(render))
+{
+    
+}
 
 std::string Cracker::Crack(const PasswordHashInfo& passwordHashInfo)
 {
