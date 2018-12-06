@@ -24,8 +24,10 @@ if ( WITH_DEBUG_MODE )
 endif()
 
 if ( CMAKE_COMPILER_IS_GNUCXX )
-    # set(MY_CXX_FLAGS  "-Wall -std=c++0x -fmessage-length=0 -v -L/usr/local/lib -L/usr/lib")
-    # set(CMAKE_CXX_FLAGS "-O0 ${MY_CXX_FLAGS}")
+    set(MY_CXX_FLAGS  " -DBOOST_ERROR_CODE_HEADER_ONLY")
+    set(MY_EXE_LINKER_FLAGS  "-pthread")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${MY_CXX_FLAGS}")
+    set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} ${MY_EXE_LINKER_FLAGS}")
 
     #set(CMAKE_CXX_FLAGS_DEBUG "-g -O0 -fno-reorder-blocks -fno-schedule-insns -fno-inline")
     #set(CMAKE_CXX_FLAGS_RELEASE "-O3 -DNDEBUG")
@@ -46,6 +48,7 @@ set (PRIVATE_CLASSES
     ConsoleRender
     UnhesherBase
     UnhesherNative
+    UnhesherFabrica
     Cryper
     )
 

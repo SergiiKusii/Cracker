@@ -3,6 +3,7 @@
 #include <shadow.h>
 #include <paths.h>
 #include <memory>
+#include <functional>
 
 #include "ShadowFile.h"
 #include "ShadowRow.h"
