@@ -11,7 +11,10 @@ void UnhesherBase::StopAll()
 
 std::string UnhesherBase::Unhesh(const PasswordHashInfo& passwordHashInfo, const UnhesherRange& range)
 {
-    
+    for(size_t i = range.start; i <= range.end; ++i)
+    {
+        
+    }
 
     return std::string();
 }
