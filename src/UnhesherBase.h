@@ -13,10 +13,10 @@ struct UnhesherRange
 class UnhesherBase
 {
 public:
-    UnhesherBase(const PasswordHashInfo& passwordHashInfo);
+    UnhesherBase() = default;
     virtual ~UnhesherBase() = default;
 
-    virtual std::string Unhesh(const UnhesherRange& range);
+    virtual std::string Unhesh(const PasswordHashInfo& passwordHashInfo, const UnhesherRange& range);
 
 protected:
     virtual std::string Crypt(const HashType, const std::string& salt, const std::string& data) = 0;
