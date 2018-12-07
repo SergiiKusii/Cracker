@@ -11,6 +11,9 @@ target_include_directories(${PROJECT}
 
 
 #boost 1.66 required
+# include(FindBoost)
+# set(Boost_USE_STATIC_LIBS ON)
+# find_package(Boost 1.66 REQUIRED COMPONENTS system filesystem thread program_options iostreams)
 # find_package(Boost REQUIRED) 
 # if(Boost_FOUND)
 #     include_directories(${Boost_INCLUDE_DIRS}) 
