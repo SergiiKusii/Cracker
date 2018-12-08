@@ -31,6 +31,11 @@ void PrintHelp()
 
 void PrintResult(const std::string& password)
 {
+    if (password.empty())
+    {
+        std::cout << "  User has no password!" << "\n";
+        return;
+    }
     std::cout << "  Cracked password: " << password << "\n";
 }
 
@@ -105,9 +110,11 @@ int main(int argc, char *argv[])
         auto hashInfo = shadowFile.GetPasswordHashInfo(cfg.userName);
         LOGD << "User: " << cfg.userName << ", hash: " << hashInfo.hash;
 
-
-        Cracker cracker(std::make_unique<ConsoleRender>());
-        auto password = cracker.Crack(hashInfo);
+        std::string password;
+        if (!hashInfo.isLocked){
+            Cracker cracker(std::make_unique<ConsoleRender>());
+            password = cracker.Crack(hashInfo);
+        }
 
         PrintResult(password);
     }
