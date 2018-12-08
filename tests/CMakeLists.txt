@@ -1,10 +1,11 @@
 cmake_minimum_required(VERSION 2.8)
-project(tests)
 
-# find_package (Boost COMPONENTS unit_test_framework REQUIRED)
+SET(PROJECT_CRACER_TEST CrackerTest)
 
-# set(test1_source CrackerTest.cpp)
-# add_executable(CrackerTest ${test1_source})
-# target_link_libraries(test1 ${Boost_LIBRARIES} calc)
+project(${PROJECT_CRACER_TEST})
 
-# add_test(NAME Test1 COMMAND test1)
+set(TEST_SOURCE CrackerTest.cpp)
+add_executable(${PROJECT_CRACER_TEST} ${TEST_SOURCE})
+target_link_libraries(${PROJECT_CRACER_TEST} ${Boost_LIBRARIES} "/usr/local/lib/libboost_unit_test_framework.a")
+
+add_test(NAME ${PROJECT_CRACER_TEST} COMMAND ${PROJECT_CRACER_TEST})
