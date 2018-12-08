@@ -1,5 +1,5 @@
 bin/
 build/
-src/.vscode/
+lib/
 src/CMakeLists.txt.user
 

@@ -8,7 +8,7 @@
             "name": "(gdb) Launch",
             "type": "cppdbg",
             "request": "launch",
-            "program": "${workspaceFolder}/bin/Cracker",
+            "program": "${workspaceFolder}/bin/Debug/Cracker",
             "args": ["shadow.txt", "sergii"],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",

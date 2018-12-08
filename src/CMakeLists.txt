@@ -1,55 +1,32 @@
 cmake_minimum_required(VERSION 2.8)
+set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${SOURCE_DIR}/cmake")
+# set(CMAKE_INCLUDE_PATH "${CMAKE_INCLUDE_PATH} ${SOURCE_DIR}/shadow ${SOURCE_DIR}/unhesher")
 
-set(CMAKE_CXX_STANDARD 14)
+set(MY_CXX_FLAGS  " -DBOOST_ERROR_CODE_HEADER_ONLY")
+set(MY_EXE_LINKER_FLAGS  "-pthread")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${MY_CXX_FLAGS}")
+set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} ${MY_EXE_LINKER_FLAGS}")
 
-OPTION(WITH_DEBUG_MODE "Build with debug mode" ON)
-
-set (PROJECT Cracker)
-project(${PROJECT})
-
-set(ROOT_DIR "${CMAKE_SOURCE_DIR}/..")
-set (BINARY_DIR  ${ROOT_DIR}/bin)
-set (SOURCE_DIR ${ROOT_DIR}/src)
-set (CMAKE_INCLUDE_PATH ${SOURCE_DIR})
-# set (CMAKE_LIBRARY_PATH ${${PROJECT}_LIB_DIR})
-set (EXECUTABLE_OUTPUT_PATH ${BINARY_DIR})
-set (CMAKE_VERBOSE_MAKEFILE ON)
-set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake")
-
-set (ERR_NO_UNIX "Cannot build on non Unix systems")
-
-if ( WITH_DEBUG_MODE )
-     ADD_DEFINITIONS( -D_DEBUG_MODE=1)
-     set (CMAKE_BUILD_TYPE Debug)
-endif()
-
-if ( CMAKE_COMPILER_IS_GNUCXX )
-    set(MY_CXX_FLAGS  " -DBOOST_ERROR_CODE_HEADER_ONLY")
-    set(MY_EXE_LINKER_FLAGS  "-pthread")
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${MY_CXX_FLAGS}")
-    set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} ${MY_EXE_LINKER_FLAGS}")
-
-    #set(CMAKE_CXX_FLAGS_DEBUG "-g -O0 -fno-reorder-blocks -fno-schedule-insns -fno-inline")
-    #set(CMAKE_CXX_FLAGS_RELEASE "-O3 -DNDEBUG")
-else ()
-    message (FATAL_ERROR ${ERR_NO_UNIX})
-endif ()
+#set(CMAKE_CXX_FLAGS_DEBUG "-g -O0 -fno-reorder-blocks -fno-schedule-insns -fno-inline")
+#set(CMAKE_CXX_FLAGS_RELEASE "-O3 -DNDEBUG")
 
 include(cmake/version.cmake)
+
+include_directories(${SOURCE_DIR}/common)
+include_directories(${SOURCE_DIR}/shadow)
+include_directories(${SOURCE_DIR}/unhesher)
+include_directories(${SOURCE_DIR}/render)
+
+add_subdirectory(shadow)
+add_subdirectory(unhesher)
+add_subdirectory(render)
 
 set (MAIN_SOURCES
     main.cpp
     )
 
 set (PRIVATE_CLASSES
-    ShadowFile
-    ShadowRow
     Cracker
-    ConsoleRender
-    UnhesherBase
-    UnhesherNative
-    UnhesherFabrica
-    Cryper
     )
 
 set (SOURCES)
@@ -59,6 +36,10 @@ foreach (class ${PRIVATE_CLASSES})
 endforeach ()
 
 add_executable (${PROJECT} ${MAIN_SOURCES} ${SOURCES})
+
+target_link_libraries(${PROJECT} Shadow)
+target_link_libraries(${PROJECT} Unhesher)
+target_link_libraries(${PROJECT} Render)
 
 include(cmake/third_party.cmake)
 

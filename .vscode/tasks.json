@@ -9,7 +9,7 @@
             },
             "command": "cmake",
             "args": [
-                "${workspaceRoot}/src"
+                "${workspaceRoot}"
             ],
             "problemMatcher": []
         },
