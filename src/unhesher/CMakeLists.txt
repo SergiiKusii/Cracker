@@ -16,3 +16,5 @@ foreach (class ${PRIVATE_CLASSES})
 endforeach ()
 
 add_library (${PROJECT_UNHESHER} STATIC ${SOURCES})
+
+target_link_libraries(${PROJECT_UNHESHER} "/usr/lib/x86_64-linux-gnu/libcrypt.a")
