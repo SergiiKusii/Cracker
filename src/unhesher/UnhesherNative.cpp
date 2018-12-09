@@ -3,7 +3,8 @@
 
 std::string UnhesherNative::Crypt(const HashType, const std::string& salt, const std::string& saltPrefix, const std::string& data)
 {
-    auto hash = crypt(data.c_str(), (saltPrefix + salt).c_str());
+    auto fullSalt = saltPrefix + salt;
+    std::string result = crypt(data.c_str(), fullSalt.c_str());
 
-    return hash;
+    return fullSalt.size() < result.size() ? result.substr(fullSalt.size() + 1) : "";
 }

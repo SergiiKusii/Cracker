@@ -39,6 +39,15 @@
                 "clean"
             ],
             "problemMatcher": []
+        },
+        {
+            "label": "tests",
+            "type": "shell",
+            "options": {
+                "cwd": "${workspaceRoot}/build"
+            },
+            "command": "ctest",
+            "problemMatcher": []
         }
     ]
 }

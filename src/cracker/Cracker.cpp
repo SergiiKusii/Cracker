@@ -26,7 +26,7 @@ std::string Cracker::Crack(const PasswordHashInfo& passwordHashInfo)
             {
                 auto unhesher = CreateUnhesher(g_unhesherType);
                 auto currPassword = unhesher->Unhesh(passwordHashInfo, {prevLen, currLen});
-                LOGI  << "thread { " << prevLen << ", " << currLen << "}";
+                LOGD  << "thread { " << prevLen << ", " << currLen << "}";
                 if (!currPassword.empty())
                 {
                     UnhesherBase::StopAll();
