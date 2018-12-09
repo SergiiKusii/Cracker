@@ -1,12 +1,9 @@
 #include "UnhesherNative.h"
+#include "unistd.h"
 
-// UnhesherNative::UnhesherNative(const PasswordHashInfo& passwordHashInfo)
-//     : UnhesherBase(passwordHashInfo)
-// {
-
-// }
-
-std::string UnhesherNative::Crypt(const HashType, const std::string& salt, const std::string& data)
+std::string UnhesherNative::Crypt(const HashType, const std::string& salt, const std::string& saltPrefix, const std::string& data)
 {
-    return std::string();
+    auto hash = crypt(data.c_str(), (saltPrefix + salt).c_str());
+
+    return hash;
 }

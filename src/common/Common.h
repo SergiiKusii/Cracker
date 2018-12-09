@@ -16,6 +16,7 @@ struct PasswordHashInfo
 {
     HashType type = HashType::none;
     std::string salt;
+    std::string saltPrefix;
     std::string hash;
     bool isLocked = false;
 };

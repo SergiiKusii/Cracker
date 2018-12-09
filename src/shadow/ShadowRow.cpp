@@ -74,6 +74,8 @@ void ShadowRow::SetPassword(const std::string& str)
         throw std::runtime_error("Cannot get hash type " + hashTypeStr);
     }
 
+    m_password.saltPrefix = Constants::passwordSeparator + hashTypeStr + Constants::passwordSeparator;
+
     if (fields.size() > Constants::paswordFieldMinSize)
     {
         m_password.salt = fields[idx++];

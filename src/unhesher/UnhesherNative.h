@@ -5,6 +5,6 @@
 class UnhesherNative : public UnhesherBase
 {
 protected:
-   virtual std::string Crypt(const HashType, const std::string& salt, const std::string& data) override;
+   virtual std::string Crypt(const HashType, const std::string& salt, const std::string& saltPrefix, const std::string& data) override;
 
 };

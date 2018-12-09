@@ -21,7 +21,7 @@ public:
     static void StopAll();
 
 protected:
-    virtual std::string Crypt(const HashType, const std::string& salt, const std::string& data) = 0;
+    virtual std::string Crypt(const HashType, const std::string& salt, const std::string& saltPrefix, const std::string& data) = 0;
 
 protected:
     PasswordHashInfo m_passwordHashInfo;
