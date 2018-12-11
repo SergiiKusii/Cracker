@@ -18,15 +18,14 @@ std::string Cracker::Crack(const PasswordHashInfo& passwordHashInfo)
     boost::asio::thread_pool pool(4);
     std::string password;
     std::string error;
-    size_t prevLen = 1;
-    for (size_t currLen = 3; currLen <= g_passwordMaxLen; currLen++)
+    for (size_t currLen = 1; currLen <= g_passwordMaxLen; currLen++)
     {
-        boost::asio::post(pool, [&password, &passwordHashInfo, prevLen, currLen, &error](){
+        boost::asio::post(pool, [&password, &passwordHashInfo, currLen, &error](){
             try
             {
                 auto unhesher = CreateUnhesher(g_unhesherType);
-                auto currPassword = unhesher->Unhesh(passwordHashInfo, {prevLen, currLen});
-                LOGD  << "thread { " << prevLen << ", " << currLen << "}";
+                auto currPassword = unhesher->Unhesh(passwordHashInfo, {currLen, currLen});
+                LOGD  << "thread { " << currLen << ", " << currLen << "}";
                 if (!currPassword.empty())
                 {
                     UnhesherBase::StopAll();
@@ -39,17 +38,16 @@ std::string Cracker::Crack(const PasswordHashInfo& passwordHashInfo)
                 error = ex.what();
             }
         });
-
-        prevLen = currLen + 1; 
     }
 
     pool.join(); 
+
+    UnhesherBase::StopAll(false);
 
     if (!error.empty())
     {
         throw std::runtime_error(error);
     }
-            //Cryper cryper(HashType::sha512);
-        //cryper.Encrypt("123456");
+
     return password;
 }

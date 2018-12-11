@@ -6,9 +6,9 @@
 static UnhesherRange g_passwordCharacters = {32, 126}; // from ' ' to '~' in ascii table
 static std::atomic<bool> g_stop(false);
 
-void UnhesherBase::StopAll()
+void UnhesherBase::StopAll(const bool stop)
 {
-    g_stop = true;
+    g_stop = stop;
 }
 
 std::string UnhesherBase::Unhesh(const PasswordHashInfo& passwordHashInfo, const UnhesherRange& range)

@@ -13,26 +13,23 @@ const std::string g_password123 = "123";
 const PasswordHashInfo hashInfo1   = {HashType::md5, "12345678", "$1$", "XM4P3PrKBgKNnTaqG9P0T/", false};
 const PasswordHashInfo hashInfo123 = {HashType::md5, "12345678", "$1$", "tRy4cXc3kmcfRZVj4iFXr/", false};
 
-BOOST_AUTO_TEST_CASE( UnitTest )
+BOOST_AUTO_TEST_CASE( CrackerTest1 )
 {
-   BOOST_CHECK( g_password1 != g_password123 );
+   Cracker cracker(std::make_unique<EmptyRender>());
+   auto password = cracker.Crack(hashInfo1);
+
+   BOOST_CHECK( g_password1 == password );
 }
 
-
-BOOST_AUTO_TEST_CASE( UnitTest2 )
+BOOST_AUTO_TEST_CASE( CrackerTest123 )
 {
-   BOOST_CHECK( g_password1 != g_password123 );
+   Cracker cracker(std::make_unique<EmptyRender>());
+   auto password = cracker.Crack(hashInfo123);
+
+   BOOST_CHECK( g_password123 == password );
 }
 
-// BOOST_AUTO_TEST_CASE( CrackerTest )
-// {
-//    Cracker cracker(std::make_unique<EmptyRender>());
-//    auto password = cracker.Crack(hashInfo1);
-
-//    BOOST_CHECK( g_password1 == password );
-// }
-
-BOOST_AUTO_TEST_CASE( UnhesherTest )
+BOOST_AUTO_TEST_CASE( UnhesherTest1 )
 {
    auto unhesher = CreateUnhesher(UnhesherType::native);
    auto currPassword = unhesher->Unhesh(hashInfo1, {1, 1});
