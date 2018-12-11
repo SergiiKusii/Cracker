@@ -4,9 +4,9 @@ set (PROJECT_UNHESHER Unhesher)
 project(${PROJECT_UNHESHER})
 
 set (PRIVATE_CLASSES
-UnhesherBase
-UnhesherNative
-UnhesherFabrica
+    UnhesherBase
+    UnhesherNative
+    UnhesherFabrica
     )
 
 set (SOURCES)
@@ -17,4 +17,6 @@ endforeach ()
 
 add_library (${PROJECT_UNHESHER} STATIC ${SOURCES})
 
-target_link_libraries(${PROJECT_UNHESHER} "/usr/lib/x86_64-linux-gnu/libcrypt.a")
+target_link_libraries(${PROJECT_UNHESHER} crypt)
+# target_link_libraries(${PROJECT_UNHESHER} cryptopp)
+

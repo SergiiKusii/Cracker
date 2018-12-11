@@ -17,3 +17,4 @@ add_library (${PROJECT_CRACKER} STATIC ${SOURCES})
 
 target_link_libraries(${PROJECT_CRACKER} Unhesher)
 target_link_libraries(${PROJECT_CRACKER} Render)
+target_link_libraries(${PROJECT_CRACKER} ${Boost_LIBRARIES})
