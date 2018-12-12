@@ -1,5 +1,6 @@
 #include "UnhesherFabrica.h"
 #include "UnhesherNative.h"
+#include "UnhesherExternal.h"
 
 UnhesherGuard CreateUnhesher(const UnhesherType type)
 {
@@ -7,7 +8,7 @@ UnhesherGuard CreateUnhesher(const UnhesherType type)
     {
     case UnhesherType::native:
         return std::make_unique<UnhesherNative>();
-    case UnhesherType::crypto:
+    case UnhesherType::external:
     default:
         break;
     }

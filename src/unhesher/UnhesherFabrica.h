@@ -5,7 +5,7 @@
 enum class UnhesherType
 {
     native,
-    crypto
+    external
 };
 
 UnhesherGuard CreateUnhesher(const UnhesherType type);

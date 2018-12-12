@@ -7,6 +7,7 @@ set (PRIVATE_CLASSES
     UnhesherBase
     UnhesherNative
     UnhesherFabrica
+    UnhesherExternal
     )
 
 set (SOURCES)
@@ -18,5 +19,5 @@ endforeach ()
 add_library (${PROJECT_UNHESHER} STATIC ${SOURCES})
 
 target_link_libraries(${PROJECT_UNHESHER} crypt)
-# target_link_libraries(${PROJECT_UNHESHER} cryptopp)
+target_link_libraries(${PROJECT_UNHESHER} cryptopp)
 
