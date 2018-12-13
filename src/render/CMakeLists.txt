@@ -5,6 +5,7 @@ project(${PROJECT_RENDER})
 
 set (PRIVATE_CLASSES
     ConsoleRender
+    ProgressBar
     )
 
 set (SOURCES)

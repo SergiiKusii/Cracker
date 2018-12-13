@@ -20,6 +20,7 @@ public:
 
     static void StopAll(const bool stop = true);
 
+    static uint64_t GetCombinationsCount(const size_t passwordLength);
 protected:
     virtual std::string Crypt(const HashType, const std::string& salt, const std::string& saltPrefix, const std::string& data) = 0;
 

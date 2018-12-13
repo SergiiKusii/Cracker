@@ -4,7 +4,8 @@
 
 struct Document
 {
-
+    uint64_t count_need;
+    uint64_t count_done;
 };
 
 class IRender
