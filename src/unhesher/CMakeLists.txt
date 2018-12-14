@@ -8,6 +8,7 @@ set (PRIVATE_CLASSES
     UnhesherNative
     UnhesherFabrica
     UnhesherExternal
+    Combination
     )
 
 set (SOURCES)
