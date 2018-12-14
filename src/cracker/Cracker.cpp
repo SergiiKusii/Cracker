@@ -17,7 +17,8 @@ Cracker::Cracker (IRenderGuard&& render)
 
 std::string Cracker::Crack(const PasswordHashInfo& passwordHashInfo)
 {
-    boost::asio::thread_pool pool(std::thread::hardware_concurrency());
+    auto coreCounts = std::thread::hardware_concurrency();
+    boost::asio::thread_pool pool(coreCounts);
     std::string password;
     std::string error;
     size_t hendledCombinations = 0;

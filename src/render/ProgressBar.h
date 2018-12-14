@@ -1,6 +1,7 @@
 #pragma once
 
 #include <string>
+#include <boost/progress.hpp>
 
 class ProgressBar
 {
@@ -13,4 +14,5 @@ public:
 private:
     uint64_t m_size;
     uint64_t m_progress;
+    boost::progress_display m_display;
 };
