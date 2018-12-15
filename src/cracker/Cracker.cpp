@@ -27,7 +27,7 @@ std::string Cracker::Crack(const PasswordHashInfo& passwordHashInfo)
     m_render->Draw({allCombinations, 0});
     for (size_t currLen = 1; currLen <= g_passwordMaxLen; currLen++)
     {
-        boost::asio::post(pool, [this, &passwordHashInfo, &password, &error, &hendledCombinations, &renderMutex, allCombinations, currLen](){
+        boost::asio::post(pool, [&, currLen](){
             try
             {
                 LOGD << " START currLen = " << currLen; 

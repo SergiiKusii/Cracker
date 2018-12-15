@@ -3,7 +3,7 @@ cmake_minimum_required(VERSION 2.8)
 set (PROJECT Cracker)
 project(${PROJECT})
 
-set(CMAKE_CXX_STANDARD 14)
+set(CMAKE_CXX_STANDARD 17)
 
 if (NOT CMAKE_BUILD_TYPE)
   set(CMAKE_BUILD_TYPE Debug CACHE STRING "Choose the type of build, options are: Debug Release" FORCE)

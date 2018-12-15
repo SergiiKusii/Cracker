@@ -44,7 +44,6 @@ std::string UnhesherBase::Unhesh(const PasswordHashInfo& passwordHashInfo, const
                                 return false;
                             }
 
-                            LOGD << "Crypt password: " << password;
                             auto hash = Crypt(passwordHashInfo.type, passwordHashInfo.salt,  passwordHashInfo.saltPrefix, password);
                             if (hash == passwordHashInfo.hash)
                             {
