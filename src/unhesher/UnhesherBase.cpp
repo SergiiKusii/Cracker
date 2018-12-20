@@ -1,6 +1,5 @@
 #include <atomic>
 #include <algorithm>
-#include <cmath>
 #include <numeric>
 
 #include <plog/Log.h>
@@ -21,10 +20,9 @@ static std::string GetPasswordChars()
     return passwordChars;
 }
 
-uint64_t UnhesherBase::GetCombinationsCount(const size_t passwordLength)
+t_range_container UnhesherBase::GetPartsRange(const size_t partsCount)
 {
-    auto res = pow(passwordLength, g_charsCount);
-    return static_cast<uint64_t>(res);
+
 }
 
 void UnhesherBase::StopAll(const bool stop)

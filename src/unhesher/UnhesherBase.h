@@ -10,6 +10,8 @@ struct UnhesherRange
     size_t end = 0;
 };
 
+using t_range_container = std::vector<UnhesherRange>;
+
 class UnhesherBase
 {
 public:
@@ -20,7 +22,7 @@ public:
 
     static void StopAll(const bool stop = true);
 
-    static uint64_t GetCombinationsCount(const size_t passwordLength);
+    static t_range_container GetPartsRange(const size_t partsCount);
 protected:
     virtual std::string Crypt(const HashType, const std::string& salt, const std::string& saltPrefix, const std::string& data) = 0;
 
