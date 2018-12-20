@@ -31,7 +31,7 @@ set (MAIN_SOURCES
     )
 
 add_executable (${PROJECT} ${MAIN_SOURCES})
-
+target_link_libraries(${PROJECT} ${Boost_LIBRARIES} )
 target_link_libraries(${PROJECT} Shadow)
 target_link_libraries(${PROJECT} Unhesher)
 target_link_libraries(${PROJECT} Render)

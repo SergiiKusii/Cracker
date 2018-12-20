@@ -15,14 +15,19 @@ Cracker::Cracker (IRenderGuard&& render)
     
 }
 
-std::string Cracker::Crack(const PasswordHashInfo& passwordHashInfo)
+std::string Cracker::Crack(const PasswordHashInfo& passwordHashInfo, const int threadsCount)
 {
-    auto coreCounts = std::thread::hardware_concurrency();
-    boost::asio::thread_pool pool(coreCounts);
+    size_t poolThreadsCount = threadsCount;
+    if (poolThreadsCount == 0)
+    {
+       poolThreadsCount = std::thread::hardware_concurrency();
+    }
+    
+    boost::asio::thread_pool pool(poolThreadsCount);
     std::string password;
     std::string error;
     size_t hendledCombinations = 0;
-    auto partsRange = UnhesherBase::GetPartsRange(coreCounts);
+    auto partsRange = UnhesherBase::GetPartsRange(poolThreadsCount);
     std::mutex renderMutex;
     const auto allCombinations = g_passwordMaxLen * partsRange.size();
     m_render->Draw({allCombinations, 0});

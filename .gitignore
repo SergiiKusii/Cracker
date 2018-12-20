@@ -3,3 +3,4 @@ build/
 lib/
 src/CMakeLists.txt.user
 
+*.txt.user

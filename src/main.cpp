@@ -4,6 +4,7 @@
 #include <iostream>
 #include <algorithm> 
 #include <iterator> 
+#include <boost/program_options.hpp>
 
 #include "ShadowFile.h"
 #include "Cracker.h"
@@ -18,16 +19,10 @@ struct Config
 {
     std::string fileName;
     std::string userName;
+    int threadsCount = 0;
+    bool verbose = false;
+    bool debug = false; 
 };
-
-void PrintHelp()
-{
-    // static plog::ColorConsoleAppender<plog::MessageOnlyFormatter> consoleAppender;
-    // plog::init(plog::info, &consoleAppender);
-
-    std::cout << "  Cracker - application for crack linux passwords.\nCopyright Sergii Kusii 2018.\n";
-    std::cout << "  Cracker usage:\n    Cracker <path to shadow file> [user name]\n";
-}
 
 void PrintResult(const std::string& password)
 {
@@ -41,20 +36,54 @@ void PrintResult(const std::string& password)
 
 bool ParseArguments(int argc, char *argv[], Config& cfg)
 {
-    if( argc < 2 || (argc == 2 && argv[1] == Constants::help))
+    using namespace boost::program_options;
+    try
     {
-        PrintHelp();
-        return false;
+        options_description desc{"\
+Cracker - application for crack linux passwords.\n\
+Copyright Sergii Kusii 2018.\n\n\
+Options"};
+        desc.add_options()
+            ("help,h", "Help screen")
+            ("shadow,s", value<std::string>(), "Shadow file name")
+            ("user,u", value<std::string>(), "User name")
+            ("core,j", value<int>(), "Threads count")
+            ("debug,d", "Show debug output")
+            ("verbose,v", "Show verbose output");
+
+        variables_map vm;
+        store(parse_command_line(argc, argv, desc), vm);
+        notify(vm);
+
+        if (vm.count("help") || !vm.count("shadow"))
+        {
+            std::cout << desc << '\n';
+            return false;
+        }
+                    
+        cfg.fileName = vm["shadow"].as<std::string>();
+        
+        if (vm.count("user"))
+        {
+            cfg.userName = vm["user"].as<std::string>();
+        }
+
+        if (vm.count("core"))
+        {
+            cfg.threadsCount = vm["core"].as<int>();
+        }
+
+        cfg.debug = vm.count("debug") > 0;
+        cfg.verbose = vm.count("verbose") > 0;
+
+        return true;
+    }
+    catch (const error &ex)
+    {
+        std::cerr << ex.what() << '\n';
     }
 
-    cfg.fileName = argv[1];
-
-    if (argc == 3)
-    {
-        cfg.userName = argv[2];
-    }
-
-    return true;
+    return false;
 }
 
 std::string GetUserName(Users& users)
@@ -85,11 +114,18 @@ int main(int argc, char *argv[])
     }
 
     static plog::ColorConsoleAppender<plog::TxtFormatter> consoleAppender;
-    #ifdef _DEBUG_MODE
-    plog::init(plog::debug, &consoleAppender);
-    #else
-    plog::init(plog::info, &consoleAppender);
-    #endif
+
+    auto logLevel = plog::info;
+    if (cfg.verbose)
+    {
+        logLevel = plog::verbose;
+    }
+    else if (cfg.debug)
+    {
+        logLevel = plog::debug;
+    }
+
+    plog::init(logLevel, &consoleAppender);
 
     LOGD << "Start Cracker";
     
@@ -113,7 +149,7 @@ int main(int argc, char *argv[])
         std::string password;
         if (!hashInfo.isLocked){
             Cracker cracker(std::make_unique<ConsoleRender>());
-            password = cracker.Crack(hashInfo);
+            password = cracker.Crack(hashInfo, cfg.threadsCount);
         }
 
         PrintResult(password);
