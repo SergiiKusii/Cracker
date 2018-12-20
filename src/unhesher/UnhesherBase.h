@@ -1,6 +1,7 @@
 #pragma once
 
 #include <memory>
+#include <vector>
 
 #include "Common.h"
 
@@ -18,7 +19,8 @@ public:
     UnhesherBase() = default;
     virtual ~UnhesherBase() = default;
 
-    virtual std::string Unhesh(const PasswordHashInfo& passwordHashInfo, const UnhesherRange& range);
+    virtual std::string Unhesh(const PasswordHashInfo& passwordHashInfo, const UnhesherRange& lenRange, const UnhesherRange& symbolsRange);
+    virtual std::string Unhesh(const PasswordHashInfo& passwordHashInfo, const UnhesherRange& lenRange);
 
     static void StopAll(const bool stop = true);
 

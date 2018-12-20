@@ -9,7 +9,7 @@ class Combination
 {
 public:
     Combination(const std::string& set, t_executor executor);
-    void Process(const size_t k);
+    void Process(const size_t k, std::string::iterator begin, std::string::iterator end);
 
 private:
     void ProcessAllKLengthRec(const std::string& prefix, const size_t k);

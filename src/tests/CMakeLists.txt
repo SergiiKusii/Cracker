@@ -4,13 +4,11 @@ SET(PROJECT_CRACER_TEST CrackerTest)
 
 project(${PROJECT_CRACER_TEST})
 
-set(TEST_SOURCE CrackerTest.cpp )
-add_executable(${PROJECT_CRACER_TEST} ${TEST_SOURCE})
-target_link_libraries(${PROJECT_CRACER_TEST} ${Boost_LIBRARIES})
-
-target_link_libraries(${PROJECT_CRACER_TEST} Shadow)
-target_link_libraries(${PROJECT_CRACER_TEST} Unhesher)
-target_link_libraries(${PROJECT_CRACER_TEST} Render)
-target_link_libraries(${PROJECT_CRACER_TEST} CrackerLib)
-
+add_executable(${PROJECT_CRACER_TEST} CrackerTest.cpp)
+target_link_libraries(${PROJECT_CRACER_TEST} ${Boost_LIBRARIES} Render CrackerLib)
 add_test(NAME ${PROJECT_CRACER_TEST} COMMAND ${PROJECT_CRACER_TEST})
+
+SET(PROJECT_UNHESHER_TEST UnhesherTest)
+add_executable(UnhesherTest UnhesherTest.cpp)
+target_link_libraries(${PROJECT_UNHESHER_TEST} ${Boost_LIBRARIES} Unhesher)
+add_test(NAME ${PROJECT_UNHESHER_TEST} COMMAND ${PROJECT_UNHESHER_TEST})

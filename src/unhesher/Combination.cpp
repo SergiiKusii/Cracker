@@ -7,10 +7,15 @@
 
  }
 
-void Combination::Process(const size_t k)
+void Combination::Process(const size_t k, std::string::iterator begin, std::string::iterator end)
 {
     m_stop = false;
-    ProcessAllKLengthRec("", k);
+    std::find_if(begin, end, [&](const char& ch){
+        std::string prefix(1, ch);
+        ProcessAllKLengthRec(prefix, k - 1);
+        return m_stop;
+    });
+
 }
 
 // The main recursive method 
