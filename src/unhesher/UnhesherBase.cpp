@@ -88,7 +88,6 @@ std::string UnhesherBase::Unhesh(const PasswordHashInfo& passwordHashInfo, const
                             }
 
                             return true;
-
                         });
 
     auto length = lenRange.start;

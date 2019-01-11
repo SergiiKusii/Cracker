@@ -10,11 +10,6 @@
 #include "Cracker.h"
 #include "ConsoleRender.h"
 
-namespace Constants
-{
-    const std::string help = "-h";
-}
-
 struct Config
 {
     std::string fileName;
@@ -34,9 +29,10 @@ void PrintResult(const std::string& password)
     std::cout << "  Cracked password: " << password << "\n";
 }
 
-bool ParseArguments(int argc, char *argv[], Config& cfg)
+std::pair<bool, Config> ParseArguments(int argc, char *argv[])
 {
     using namespace boost::program_options;
+    Config cfg;
     try
     {
         options_description desc{"\
@@ -58,7 +54,7 @@ Options"};
         if (vm.count("help") || !vm.count("shadow"))
         {
             std::cout << desc << '\n';
-            return false;
+            return {false, cfg};
         }
                     
         cfg.fileName = vm["shadow"].as<std::string>();
@@ -76,14 +72,14 @@ Options"};
         cfg.debug = vm.count("debug") > 0;
         cfg.verbose = vm.count("verbose") > 0;
 
-        return true;
+        return {true, cfg};
     }
     catch (const error &ex)
     {
         std::cerr << ex.what() << '\n';
     }
 
-    return false;
+    return {false, cfg};
 }
 
 std::string GetUserName(Users& users)
@@ -105,14 +101,8 @@ std::string GetUserName(Users& users)
     return userName;
 }
 
-int main(int argc, char *argv[])
+void InitLog(const Config& cfg)
 {
-    Config cfg;
-    if (!ParseArguments(argc, argv, cfg))
-    {
-        return 0;
-    }
-
     static plog::ColorConsoleAppender<plog::TxtFormatter> consoleAppender;
 
     auto logLevel = plog::info;
@@ -126,6 +116,17 @@ int main(int argc, char *argv[])
     }
 
     plog::init(logLevel, &consoleAppender);
+}
+
+int main(int argc, char *argv[])
+{
+    auto[res, cfg] = ParseArguments(argc, argv);
+    if (!res)
+    {
+        return 0;
+    }
+
+    InitLog(cfg);
 
     LOGD << "Start Cracker";
     
